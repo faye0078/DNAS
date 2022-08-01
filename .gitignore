@@ -1,3 +1,4 @@
 /run
 /.idea
 /apex
+**/__pycache__

@@ -3,6 +3,8 @@ Code for paper：
 
 DNAS: Decoupling Neural Architecture Search for High-Resolution Remote Sensing Image Semantic Segmentation.
 
+Methods' framework
+![framework](./paper/framework.jpg)
 ## How to search
 ### First Stage
 * Create first stage connections: **create_model_encode.py**
@@ -42,3 +44,9 @@ DNAS: Decoupling Neural Architecture Search for High-Resolution Remote Sensing I
 * Train the last model: **retrain_nas.py/retrain.sh**
 
   **input:** model_name=flexinet
+
+## How to Predict
+
+
+Predict result samples
+![framework](./paper/result.jpg)

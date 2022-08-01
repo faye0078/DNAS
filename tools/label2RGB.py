@@ -36,10 +36,8 @@ def translabel(map, label):
     return rgb_image
 
 if __name__ == "__main__":
-    # base_dir = "/media/dell/DATA/wy/data/512"
-    # list_path = "/media/dell/DATA/wy/Seg_NAS/data/lists/GID/rs_test.lst"
-    base_dir = "/media/dell/DATA/wy/data"
-    list_path = "/media/dell/DATA/wy/Seg_NAS/data/lists/uadataset/mini_map_uad_512_test.lst"
+    base_dir = ""
+    list_path = ""
 
     if not os.path.exists(os.path.join(base_dir, "rgb_label_sample")):
             os.makedirs(os.path.join(base_dir, "rgb_label_sample"))
@@ -55,8 +53,7 @@ if __name__ == "__main__":
     sample_list = label_list
     for label_path in sample_list:
         label = cv2.imread(os.path.join(base_dir, label_path), cv2.IMREAD_GRAYSCALE)
-        # image = translabel(GID_map, label)
-        image = translabel(FU_map, label)
+        image = translabel(GID_map, label)
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         filename = label_path.split('/')[-1]
         cv2.imwrite(os.path.join(base_dir, "rgb_label_sample", filename), image)
