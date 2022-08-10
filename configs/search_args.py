@@ -5,7 +5,7 @@ def obtain_search_args():
     parser = argparse.ArgumentParser(description="")
 
     parser.add_argument('--forward', type=bool, default=True, help='')
-    # checking point
+
     parser.add_argument('--resume', type=str, default=None, help='put the path to resuming file if needed')
     parser.add_argument('--checkname', type=str, default='test', help='set the checkpoint name')
     parser.add_argument('--model_name', type=str, default='FlexiNet', choices=['AutoDeeplab', 'DCNAS', 'FlexiNet', 'RSNet'], help='set the model name')
@@ -38,7 +38,7 @@ def obtain_search_args():
     parser.add_argument('--nclass', type=int, default=15, help='number of class')
 
     parser.add_argument("--dist", type=bool, default=False)
-    # training hyper params
+
     parser.add_argument('--epochs', type=int, default=40, metavar='N', help='number of epochs to train (default: auto)')
     parser.add_argument('--start_epoch', type=int, default=0, metavar='N', help='start epochs (default:0)')
     parser.add_argument('--filter_multiplier', type=int, default=8)
@@ -52,7 +52,7 @@ def obtain_search_args():
     parser.add_argument('--val-batch-size', type=int, default=5, metavar='N', help='input batch size for testing (default: auto)')
     parser.add_argument('--test-batch-size', type=int, default=5, metavar='N', help='input batch size for testing (default: auto)')
     parser.add_argument('--use_balanced_weights', action='store_true', default=False, help='whether to use balanced weights (default: False)')
-    # optimizer params
+
     parser.add_argument('--lr', type=float, default=0.025, metavar='LR',help='learning rate (default: auto)')
     parser.add_argument('--min_lr', type=float, default=0.001)
     parser.add_argument('--arch-lr', type=float, default=3e-3, metavar='LR', help='learning rate for alpha and beta in architect searching process')
@@ -63,16 +63,14 @@ def obtain_search_args():
     parser.add_argument('--arch-weight-decay', type=float, default=1e-3, metavar='M', help='w-decay (default: 5e-4)')
 
     parser.add_argument('--nesterov', action='store_true', default=False, help='whether use nesterov (default: False)')
-    # cuda, seed and logging
+
     parser.add_argument('--no-cuda', action='store_true',default=False, help='disables CUDA training')
     parser.add_argument('--use_amp', action='store_true', default=False)
     parser.add_argument('--gpu-ids', type=str, default='0',help='use which gpu to train, must be a comma-separated list of integers only (default=0)')
     parser.add_argument('--seed', type=int, default=1, metavar='S', help='random seed (default: 1)')
 
-
-    # finetuning pre-trained models
     parser.add_argument('--ft', action='store_true', default=False, help='finetuning on a different dataset')
-    # evaluation option
+
     parser.add_argument('--eval-interval', type=int, default=1, help='evaluuation interval (default: 1)')
     parser.add_argument('--val', action='store_true', default=True, help='skip validation during training')
     parser.add_argument('--affine', default=False, type=bool, help='whether use affine in BN')

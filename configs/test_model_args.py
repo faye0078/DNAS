@@ -4,8 +4,7 @@ import numpy as np
 def obtain_test_args():
     parser = argparse.ArgumentParser(description="ReTrain the nas model")
 
-    # '/media/dell/DATA/wy/Seg_NAS/run/GID/12layers_onepath_retrain/model_best.pth.tar'
-    parser.add_argument('--resume', type=str, default='/media/dell/DATA/wy/Seg_NAS/run/GID/retrain/GID15_hrnet/experiment_0/epoch39_checkpoint.pth.tar', help='put the path to resuming file if needed')
+    parser.add_argument('--resume', type=str, default=None, help='put the path to resuming file if needed')
     parser.add_argument('--use_default', type=bool, default=False, help='if use the default arch')
     parser.add_argument('--use_low', type=bool, default=True, help='if use the low level features')
     parser.add_argument('--model_name', type=str, default='hrnet', choices=['one_path', 'multi', 'hrnet', 'flexinet', 'deeplabv3plus', 'pspnet', 'unet', 'refinenet', 'fast-nas', 'MACUNet', 'MAResUNet', 'MSFCN'],  help='the model name')
@@ -34,13 +33,13 @@ def obtain_test_args():
     parser.add_argument('--loss-type', type=str, default='ce', choices=['ce', 'focal'], help='loss func type (default: ce)')
     NORMALISE_PARAMS = [
                         1.0 / 255,  # SCALE
-                        np.array([0.485, 0.456, 0.406]).reshape((1, 1, 3)),  # MEAN
-                        np.array([0.229, 0.224, 0.225]).reshape((1, 1, 3)),  # STD
+                        np.array([0.485, 0.456, 0.406, 0.411]).reshape((1, 1, 4)),  # MEAN
+                        np.array([0.229, 0.224, 0.225, 0.227]).reshape((1, 1, 4)),  # STD
                         ]
     parser.add_argument("--normalise-params", type=list, default=NORMALISE_PARAMS, help="Normalisation parameters [scale, mean, std],")
 
     parser.add_argument("--dist", type=bool, default=False)
-    # training hyper params
+
     parser.add_argument('--epochs', type=int, default=100, metavar='N', help='number of epochs to train (default: auto)')
     parser.add_argument('--start_epoch', type=int, default=0, metavar='N', help='start epochs (default:0)')
     parser.add_argument('--filter_multiplier', type=int, default=32)
@@ -51,7 +50,6 @@ def obtain_test_args():
     parser.add_argument('--num_worker', type=int, default=4,metavar='N', help='numer workers')
     parser.add_argument('--batch-size', type=int, default=1, metavar='N', help='input batch size for training (default: auto)')
 
-    # optimizer params
     parser.add_argument('--lr', type=float, default=0.025, metavar='LR', help='learning rate (default: auto)')
     parser.add_argument('--min_lr', type=float, default=0.001)
     parser.add_argument('--arch-lr', type=float, default=3e-3, metavar='LR', help='learning rate for alpha and beta in architect searching process')
@@ -59,14 +57,11 @@ def obtain_test_args():
     parser.add_argument('--momentum', type=float, default=0.9, metavar='M', help='momentum (default: 0.9)')
     parser.add_argument('--weight-decay', type=float, default=3e-4, metavar='M', help='w-decay (default: 5e-4)')
     parser.add_argument('--arch-weight-decay', type=float, default=1e-3, metavar='M', help='w-decay (default: 5e-4)')
-    # cuda, seed and logging
+
     parser.add_argument('--use_amp', action='store_true', default=True)
     parser.add_argument('--gpu-ids', type=str, default='0', help='use which gpu to train, must be a comma-separated list of integers only (default=0)')
     parser.add_argument('--seed', type=int, default=1, metavar='S', help='random seed (default: 1)')
-    # checking point
 
-
-    # evaluation option
     parser.add_argument('--val', action='store_true', default=True, help='skip validation during training')
 
     args = parser.parse_args()

@@ -37,19 +37,13 @@ def obtain_retrain_args():
     parser.add_argument('--loss-type', type=str, default='ce', choices=['ce', 'focal'], help='loss func type (default: ce)')
     NORMALISE_PARAMS = [
                         1.0 / 255,  # SCALE
-                        np.array([0.485, 0.456, 0.406]).reshape((1, 1, 3)),  # MEAN
-                        np.array([0.229, 0.224, 0.225]).reshape((1, 1, 3)),  # STD
+                        np.array([0.485, 0.456, 0.406, 0.411]).reshape((1, 1, 4)),  # MEAN
+                        np.array([0.229, 0.224, 0.225, 0.227]).reshape((1, 1, 4)),  # STD
                         ]
-    #     [
-    #     1.0 / 255,  # SCALE
-    #     np.array([0.40781063, 0.44303973, 0.35496944]).reshape((1, 1, 3)),  # MEAN
-    #     np.array([0.3098623 , 0.2442191 , 0.22205387]).reshape((1, 1, 3)),  # STD
-    # ]
     parser.add_argument("--normalise-params", type=list, default=NORMALISE_PARAMS, help="Normalisation parameters [scale, mean, std],")
     parser.add_argument('--nclass', type=int, default=12,help='number of class')
 
     parser.add_argument("--dist", type=bool, default=False)
-    # training hyper params
 
     parser.add_argument('--start_epoch', type=int, default=0, metavar='N', help='start epochs (default:0)')
     parser.add_argument('--filter_multiplier', type=int, default=32)

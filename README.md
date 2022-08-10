@@ -1,4 +1,6 @@
 # DNAS
+The code is under specification modification and will be able to run normally
+
 Code for paper：
 
 DNAS: Decoupling Neural Architecture Search for High-Resolution Remote Sensing Image Semantic Segmentation.
