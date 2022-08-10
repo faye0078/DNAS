@@ -3,7 +3,7 @@ The code is under specification modification and will be able to run normally
 
 Code for paper：
 
-DNAS: Decoupling Neural Architecture Search for High-Resolution Remote Sensing Image Semantic Segmentation.
+[DNAS: Decoupling Neural Architecture Search for High-Resolution Remote Sensing Image Semantic Segmentation.](https://www.mdpi.com/2072-4292/14/16/3864)
 
 Methods' framework
 ![framework](./paper/framework.jpg)
