@@ -32,7 +32,7 @@ def obtain_retrain_args():
     parser.add_argument('--base_size', type=int, default=320, help='base image size')
 
     parser.add_argument('--sync-bn', type=bool, default=None, help='whether to use sync bn (default: auto)')
-    parser.add_argument('--use_ABN', type=bool, default=False, help='whether to use abn (default: False)')
+    parser.add_argument('--use-ABN', type=bool, default=False, help='whether to use abn (default: False)')
     parser.add_argument('--freeze-bn', type=bool, default=False, help='whether to freeze bn parameters (default: False)')
     parser.add_argument('--loss-type', type=str, default='ce', choices=['ce', 'focal'], help='loss func type (default: ce)')
     NORMALISE_PARAMS = [

@@ -1,9 +1,22 @@
 import os
 import numpy as np
 import sys
+import argparse
 sys.path.append("../")
 from decode.first_decoder import get_first_space
 from decode.second_decoder import get_second_space
+
+def obtain_encode_args():
+    parser = argparse.ArgumentParser(description="get model encode config")
+
+    parser.add_argument('--stage', type=str, default=None, choices=['first', 'second', 'third'], help='model stage')
+    parser.add_argument('--layers', type=int, default=12, help='supernet layers number')
+    parser.add_argument('--save_path', type=str, default=None, help='model encode save path')
+    parser.add_argument('--core_path', type=str, default=None, help='model encode core path save path')
+    parser.add_argument('--betas_path_stage1', type=str, default=None,  help='stage1 arch_parameters save path')
+    parser.add_argument('--betas_path_stage2', type=str, default=None,  help='stage2 arch_parameters save path')
+    args = parser.parse_args()
+    return args
 def first_connect_4(layer):
     connections = []
     connections.append([[-1, 0], [0, 0]])
@@ -45,7 +58,7 @@ def first_connect_4(layer):
     return np.array(connections)
 
 
-def second_connect(layer, depth, path):
+def second_connect(layer, path):
     connections = []
     for i in range(layer):
         # connections.append([[i, path[i]], [i + 1, path[i + 1]]])
@@ -156,27 +169,6 @@ def third_connect(used_betas):
 
     return connections
 
-def loop_stage1_cell_arch_init():
-    a = np.zeros([14, 4, 12])
-    a[:, :, 1] = 1
-    return a
-
-# def test_forward(target, connections, layer):
-#
-#     if target[1][0] == layer:
-#         return True
-#     forward_connection_list = [connection for connection in connections if connection[0]==target[1]]
-#     for forward_connection in forward_connection_list:
-#         return test_forward(forward_connection, connections, layer)
-#
-#
-# def test_back(target, connections):
-#     if target[0][0] == -1:
-#         return True
-#     back_connection_list = [connection for connection in connections if connection[1] == target[0]]
-#     for back_connection in back_connection_list:
-#         return test_forward(back_connection, connections)
-
 def test_connections(connections):
     layers = [connection[1][0] for connection in connections]
     layers.sort()
@@ -184,37 +176,30 @@ def test_connections(connections):
         if connections.count(connection) != 1:
             print("have samed connections")
             exit()
-
-        # test_forward(connection, connections, layers[-1])
-        # if ~test_back(connection, connections) or ~test_forward(connection, connections, layers[-1]):
-        #     connections.remove([connection])
     return True
 if __name__ == "__main__":
-    # first connections
-    # connections = first_connect_4(15) #
-    # np.save('./model_encode/first_connect_4.npy', connections)  # 保存为.npy格式
+    args = obtain_encode_args()
+    if args.stage == 'first':
+        # first connections
+        connections = first_connect_4(args.layers - 1) #
+        np.save(args.save_path, connections)
 
-    # second connections
-    # betas_path = '/media/dell/DATA/wy/Seg_NAS/run/uadataset_dfc/search/16layers_first/experiment_0/betas/'
-    # path = get_first_space(betas_path)
-    # np.save('./model_encode/core_path.npy', path[59])
-    # connections = second_connect(16, 4, path[59])
-    # if test_connections(connections):
-    #     np.save('./model_encode/second_connect_4.npy', connections)  # 保存为.npy格式
+    elif args.stage == 'second':
+        # second connections
+        betas_path = args.betas_path_stage1
+        path = get_first_space(betas_path)
+        np.save(args.core_path, path[-1])
+        connections = second_connect(16, 4, path[-1])
+        if test_connections(connections):
+            np.save(args.save_path, connections)
 
-    # third connections
-    betas_path_stage1 = '/media/dell/DATA/wy/Seg_NAS/run/uadataset_dfc/search/16layers_first/experiment_0/betas/'
-    betas_path_stage2 = '/media/dell/DATA/wy/Seg_NAS/run/uadataset_dfc/search/16layers_second/experiment_0/betas/'
-    core_path = get_first_space(betas_path_stage1)[59]
-    used_betas = get_second_space(betas_path_stage2, core_path)[59]
-    connections = third_connect(used_betas)
-    test_connections(connections)
-    connections_path = './model_encode/third_connect_4.npy'
-    np.save(connections_path, connections)
+    elif args.stage == 'third':
+        # third connections
+        betas_path_stage1 = args.betas_path_stage1
+        betas_path_stage2 = args.betas_path_stage2
+        core_path = get_first_space(betas_path_stage1)[-1]
+        used_betas = get_second_space(betas_path_stage2, core_path)[-1]
+        connections = third_connect(used_betas)
+        if test_connections(connections):
+            np.save(args.save_path, connections)
 
-    # get init cellarch
-    # cell_arch = loop_stage1_cell_arch_init()
-    # path = './model_encode/uadataset/one_loop_14layers_mixedcell/'
-    # if not os.path.exists(path):
-    #     os.makedirs(path)
-    # np.save(path + 'init_cell_arch.npy', cell_arch)

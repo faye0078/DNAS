@@ -1,5 +1,4 @@
 # DNAS
-The code is under specification modification and will be able to run normally
 
 Code for paper：
 

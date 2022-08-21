@@ -17,30 +17,17 @@ try:
     APEX_AVAILABLE = True
 except ModuleNotFoundError:
     APEX_AVAILABLE = False
-from search.loss import SegmentationLosses
+from utils.loss import SegmentationLosses
 from dataloaders import make_data_loader
 # from decoder import Decoder
-from search.lr_scheduler import LR_Scheduler
+from utils.lr_scheduler import LR_Scheduler
 from retrain.saver import Saver
 # from utils.summaries import TensorboardSummary
-from search.evaluator import Evaluator
-from retrain.model_onepath import Retrain_Autodeeplab as Onepath_Autodeeplab
-from retrain.model_multi import Retrain_Autodeeplab as Multi_Autodeeplab
+from utils.evaluator import Evaluator
 from model.RetrainNet import RetrainNet
-from model.early_fusion.RetrainNet import RetrainNet as Fusion_RetrainNet
-from model.deeplabv3plus.deeplab import DeepLabv3_plus
-from model.pspnet.train import build_network
-from model.UNet import U_Net
-from model.RefineNet.RefineNet import rf101
 from model.cell import ReLUConvBN
-from model.seg_hrnet import get_seg_model
-from model.fast_nas.make_fastnas_model import fastNas
-from model.SrNet import SrNet
-from model.MACU_Net import MACUNet
-from model.MAResUNet import MAResUNet
-from model.MSFCN import MSFCN2D
 
-from search.copy_state_dict import copy_state_dict
+from utils.copy_state_dict import copy_state_dict
 
 class Trainer(object):
     def __init__(self, args):

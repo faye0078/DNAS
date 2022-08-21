@@ -3,7 +3,7 @@ import torch
 from torch import nn
 import numpy
 from model.cell import ReLUConvBN, MixedRetrainCell, MixedRetrainCell_origin
-from retrain.aspp import ASPP
+from model.aspp import ASPP
 import torch.nn.functional as F
 
 class RetrainNet(nn.Module):
