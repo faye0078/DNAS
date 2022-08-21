@@ -10,44 +10,56 @@ Methods' framework
 ---
 ## How to search
 ### First Stage
-* Create first stage connections: **create_model_encode.py**
+* Create first stage connections: 
 
-  **input:** layers number - 1, **output:** 'model_encode/first{}.npy'
+```bash
+sh ./experiments/stage1_encode.sh
+```
 
 
-* Train the first surperNet: **train_search.py/train-search-flexinet.sh**
-  
-  **input:** model_name=flexinet, search_stage=first, model_encode_path=first{}.npy
+* Train the first surpernet: 
+
+```bash
+sh ./experiments/stage1_search.sh
+```
 
 ### Second Stage
-* Decode the first result and create second stage connections:**first_decoder.py/create_model_encode.py**
+* Create second stage connections: 
 
-  **input:** betas_path, **output:** 'model_encode/second{}.npy'
+```bash
+sh ./experiments/stage2_encode.sh
+```
 
+* Train the second surpernet: 
 
-* Train the second surperNet: **train_search.py/train-search-flexinet.sh**
-
-  **input:** model_name=flexinet, search_stage=second, model_encode_path=second{}.npy
-
+```bash
+sh ./experiments/stage2_search.sh
+```
 ### Third Stage
-* Decode the second result and create third stage connections:**second_decoder.py/create_model_encode.py**
+* Create third stage connections: 
 
-  **input:** betas_path_stage1, betas_path_stage2, **output:** 'model_encode/third{}.npy'
+```bash
+sh ./experiments/stage3_encode.sh
+```
+* Train the third surpernet: 
 
-
-* Train the third surperNet: **train_search.py/train-search-flexinet.sh**
-
-  **input:** model_name=flexinet, search_stage=third, model_encode_path=third{}.npy
+```bash
+sh ./experiments/stage3_search.sh
+```
 ---
 ## How to Retrain
-* Decode the third result and create retrain cell structure: **third_decoder.py**
-
-  **input:** alphas_path, **output:** 'cell_operations.npy'
-* Train the last model: **retrain_nas.py/retrain.sh**
-
-  **input:** model_name=flexinet
+* Decode the third result and create retrain cell structure:
+```bash
+sh ./experiments/retrain_encode.sh
+```
+* Train the last model:
+```bash
+sh ./experiments/retrain.sh
+```
 ---
 ## How to Predict
-
+```bash
+sh ./experiments/predict.sh
+```
 Predict result samples
 ![framework](./paper/result.jpg)
