@@ -7,3 +7,4 @@ def get_data_path(dataset):
         Path['val_list'] = "./data/lists/GID/rs_val.lst"
         Path['test_list'] = "./data/lists/GID/rs_test.lst"
     return Path
+# 12
