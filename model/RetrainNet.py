@@ -2,21 +2,12 @@ import numpy as np
 import torch
 from torch import nn
 import numpy
-from model.cell import ReLUConvBN, MixedRetrainCell, MixedRetrainCell_origin
+from model.cell import MixedRetrainCell
 import torch.nn.functional as F
 
 class RetrainNet(nn.Module):
 
     def __init__(self, layers, depth, connections, cell_arch, dataset, num_classes, decoder, base_multiplier=40):
-        '''
-        Args:
-            layers: layer × depth： one or zero, one means true
-            depth: the model scale depth
-            connections: the node connections
-            cell: cell type
-            dataset: dataset
-            base_multiplier: base scale multiplier
-        '''
         super(RetrainNet, self).__init__()
         self.block_multiplier = 1
         self.base_multiplier = base_multiplier
@@ -25,10 +16,10 @@ class RetrainNet(nn.Module):
         self.connections = connections
         self.node_add_num = np.zeros([len(layers), self.depth])
         self.decoder = decoder
-        cell = MixedRetrainCell_origin
+        cell = MixedRetrainCell
 
         half_base = int(base_multiplier // 2)
-        if dataset == 'GID' or dataset == 'hps-GID':
+        if dataset == 'GID':
             input_channel = 4
         elif dataset == 'uadataset_dfc':
             input_channel = 5

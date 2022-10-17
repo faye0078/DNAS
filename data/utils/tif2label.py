@@ -95,8 +95,8 @@ def tif2label(filepath):
             #      for j in range(img.shape[1]):
             #             gray_img[i][j] = get_index(img[i][j])
             folder = os.path.exists("E:/wangyu_file/label/" + filename0)
-            # 判断文件夹是否存在，不存在则新建国家文件
-            if not folder:  # 判断是否存在文件夹如果不存在则创建为文件夹
+
+            if not folder: 
                 os.makedirs("E:/wangyu_file/label/" + filename0)
             filename = filename.replace(".tif", ".png")
             filename = "E:/wangyu_file/label/" + filename0 + "/" + filename.split("\\")[1]

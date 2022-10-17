@@ -1,5 +1,7 @@
 import torch
 import time
+import sys
+sys.path.append("../")
 from configs.test_model_args import obtain_test_args
 from engine.retrainer import Trainer as retrainer
 

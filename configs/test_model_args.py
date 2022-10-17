@@ -5,12 +5,12 @@ def obtain_test_args():
     parser = argparse.ArgumentParser(description="ReTrain the nas model")
     
     # model
-    parser.add_argument('--resume', type=str, default='../model/model_encode/GID-5/14layers_best/best_model.pth.tar', help='put the path to resuming file if needed')
+    parser.add_argument('--resume', type=str, default='../model/model_encode/best_model.pth.tar', help='put the path to resuming file if needed')
     parser.add_argument('--checkname', type=str, default='test', help='set the checkpoint name')
     parser.add_argument('--model_name', type=str, default='DNAS', choices=['DNAS', 'hrnet', 'deeplabv3plus', 'pspnet', 'unet', 'refinenet', 'fast-nas', 'SrNet', 'one_path','MACUNet', 'MAResUNet', 'MSFCN'], help='the model name')
     parser.add_argument('--layers', type=int, default=14, help='supernet layers number')
-    parser.add_argument('--model_encode_path', type=str, default='../model/model_encode/GID-5/14layers_best/third_connect.npy')
-    parser.add_argument('--cell_arch', type=str, default='../model/model_encode/GID-5/14layers_best/cell_operations.npy')
+    parser.add_argument('--model_encode_path', type=str, default='../model/model_encode/third_connect.npy')
+    parser.add_argument('--cell_arch', type=str, default='../model/model_encode/cell_operations.npy')
     parser.add_argument('--affine', default=False, type=bool, help='whether use affine in BN')
     
     # data
