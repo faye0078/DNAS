@@ -25,7 +25,7 @@ Ubuntu(or other Linux distribution), one GPU (video memory greater than 12GB)
 
 ## Dataset
 
-We use the [GID-5](https://captain-whu.github.io/GID/) dataset in this rep. The original image of size 6800 × 7200 and the corresponding label are cut into blocks of size 512 × 512. These blocks are randomly divided into a training set, a validation set, and a test set in a ratio of 6 : 2 : 2. 
+We use the [GID-5](https://captain-whu.github.io/GID/)(4 bands: R, G, B, and NIR) dataset in this rep. The original image of size 6800 × 7200 and the corresponding label are cut into blocks of size 512 × 512. These blocks are randomly divided into a training set, a validation set, and a test set in a ratio of 6 : 2 : 2. 
 
 The list file in [list_dir](./data/lists/GID/). You can Download these blocks from [OneDrive](https://1drv.ms/u/s!AkdG3kpBQQcHg8BVUajKSwLF3WeNNg?e=gy3xI0) or [BaiduNetDisk](https://pan.baidu.com/s/1fLXmJZiJ7STPX2jh4S9nRg)(code: 1111), and move it to the [data](./data/) dir 
 
