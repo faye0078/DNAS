@@ -99,12 +99,12 @@ sh retrain.sh
 Consider cite the DNAS in your publications if it helps your research. 
 
 ```
-@Article{rs14163864,
-AUTHOR = {Wang Yu and Li, Yansheng and Chen, Wei and Li, Yunzhou and Dang, Bo},
-TITLE = {DNAS: Decoupling Neural Architecture Search for High-Resolution Remote Sensing Image Semantic Segmentation},
-JOURNAL = {Remote Sensing},
-URL = {https://www.mdpi.com/2072-4292/14/16/3864},
-DOI = {10.3390/rs14163864}
+@article{rs14163864,
+    author = {Wang Yu and Li, Yansheng and Chen, Wei and Li, Yunzhou and Dang, Bo},
+    title = {DNAS: Decoupling Neural Architecture Search for High-Resolution Remote Sensing Image Semantic Segmentation},
+    journal = {Remote Sensing},
+    url = {https://www.mdpi.com/2072-4292/14/16/3864},
+    doi = {10.3390/rs14163864}
 }
 ```
 
