@@ -4,9 +4,9 @@ Code for paper：
 
 [DNAS: Decoupling Neural Architecture Search for High-Resolution Remote Sensing Image Semantic Segmentation.](https://www.mdpi.com/2072-4292/14/16/3864)
 
-In DNAS, a hierarchical search space with three levels is recommended: path-level, connection-level, and cell-level. To adapt to this hierarchical search space, we devised a new decoupling search optimization strategy to decrease the memory occupation. More specifically, the search optimization strategy consists of three stages: (1) a light super-net (i.e., the specific search space) in the path-level space is trained to get the optimal path coding; (2) we endowed the optimal path with various cross-layer connections and it is trained to obtain the connection coding; (3) the super-net, which is initialized by path coding and connection coding, is populated with kinds of concrete cell operators and the optimal cell operators are finally determined. It is worth noting that the well-designed search space can cover various network candidates and the optimization process can be done efficiently.
+**Abstract**: In DNAS, a hierarchical search space with three levels is recommended: path-level, connection-level, and cell-level. To adapt to this hierarchical search space, we devised a new decoupling search optimization strategy to decrease the memory occupation. More specifically, the search optimization strategy consists of three stages: (1) a light super-net (i.e., the specific search space) in the path-level space is trained to get the optimal path coding; (2) we endowed the optimal path with various cross-layer connections and it is trained to obtain the connection coding; (3) the super-net, which is initialized by path coding and connection coding, is populated with kinds of concrete cell operators and the optimal cell operators are finally determined. It is worth noting that the well-designed search space can cover various network candidates and the optimization process can be done efficiently.
 
-Methods' framework
+**Methods' framework**
 
 ![framework](./paper/framework.jpg)
 ---
@@ -117,3 +117,6 @@ Consider cite this project in your publications if it helps your research.
     year ={2022}
 }
 ```
+
+## Contact
+If you have any questions about it, please let me know. (📧 email:wangfaye@whu.edu.cn)
