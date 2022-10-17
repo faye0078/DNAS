@@ -3,4 +3,5 @@
 /apex
 **/__pycache__
 **/512
+**/run
 *.tar
