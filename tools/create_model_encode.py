@@ -3,8 +3,8 @@ import numpy as np
 import sys
 import argparse
 sys.path.append("../")
-from decode.first_decoder import get_first_space
-from decode.second_decoder import get_second_space
+from model.decode.first_decoder import get_first_space
+from model.decode.second_decoder import get_second_space
 
 def obtain_encode_args():
     parser = argparse.ArgumentParser(description="get model encode config")
