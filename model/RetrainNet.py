@@ -3,7 +3,6 @@ import torch
 from torch import nn
 import numpy
 from model.cell import ReLUConvBN, MixedRetrainCell, MixedRetrainCell_origin
-from model.aspp import ASPP
 import torch.nn.functional as F
 
 class RetrainNet(nn.Module):
@@ -71,12 +70,7 @@ class RetrainNet(nn.Module):
 
                 if i == len(self.layers) -1 and num_connect != 0:
                     num_last_features += self.base_multiplier * multi_dict[j]
-        if self.decoder == 'aspp':
-            self.last_conv = nn.Sequential(ASPP(num_last_features, 256, num_classes),
-                                       nn.Conv2d(256, num_classes, kernel_size=1, stride=1))
-
-        else:
-            self.last_conv = nn.Sequential(nn.Conv2d(num_last_features, 256, kernel_size=3, stride=1, padding=1, bias=False),
+        self.last_conv = nn.Sequential(nn.Conv2d(num_last_features, 256, kernel_size=3, stride=1, padding=1, bias=False),
                                        nn.BatchNorm2d(256),
                                        nn.Dropout(0.5),
                                        nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1, bias=False),

@@ -13,9 +13,8 @@ class Decoder(object):
             for j in range(4):
                 self.cell_space[i][j][self.alphas[i][j].sort()[1][-3:]] = 1
 
-
-if __name__ == '__main__':
-    path = '/media/dell/DATA/wy/Seg_NAS/run/uadataset_dfc/search/12layers_third/experiment_0/alphas/'
+def get_retrain_space(alpha_path):
+    path = alpha_path
     alphas_list = OrderedDict()
     cell_list = OrderedDict()
 
@@ -23,7 +22,6 @@ if __name__ == '__main__':
         for filename in filenames:
             if filename.split('.')[0].split('_')[0] == 'alphas':
                 alphas_list[filename] = np.load(dirpath + filename)
-
                 decoder = Decoder(alphas_list[filename])
                 cell_list[filename] = decoder.cell_space
 
@@ -33,10 +31,7 @@ if __name__ == '__main__':
         idx = 'alphas_{}.npy'.format(str(i))
         order_cell_list.append(cell_list[idx])
     # print(path_list)
-    print(cell_list)
-    b = np.array(cell_list['alphas_59.npy'])
-
-    np.save('/media/dell/DATA/wy/Seg_NAS/model/model_encode/uadataset_dfc/12layers/cell_operations.npy', b)
-    # print(b)
+    print(order_cell_list)
+    return order_cell_list
 
 

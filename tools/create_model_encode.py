@@ -5,16 +5,18 @@ import argparse
 sys.path.append("../")
 from model.decode.first_decoder import get_first_space
 from model.decode.second_decoder import get_second_space
+from model.decode.third_decoder import get_retrain_space
 
 def obtain_encode_args():
     parser = argparse.ArgumentParser(description="get model encode config")
 
-    parser.add_argument('--stage', type=str, default=None, choices=['first', 'second', 'third'], help='model stage')
+    parser.add_argument('--stage', type=str, default=None, choices=['first', 'second', 'third', 'retrain'], help='model stage')
     parser.add_argument('--layers', type=int, default=12, help='supernet layers number')
     parser.add_argument('--save_path', type=str, default=None, help='model encode save path')
-    parser.add_argument('--core_path', type=str, default=None, help='model encode core path save path')
+    parser.add_argument('--model_core_path', type=str, default=None, help='model encode core path save path')
     parser.add_argument('--betas_path_stage1', type=str, default=None,  help='stage1 arch_parameters save path')
     parser.add_argument('--betas_path_stage2', type=str, default=None,  help='stage2 arch_parameters save path')
+    parser.add_argument('--alphas_path', type=str, default=None,  help='stage3 cell_arch_parameters save path')
     args = parser.parse_args()
     return args
 def first_connect_4(layer):
@@ -61,7 +63,6 @@ def first_connect_4(layer):
 def second_connect(layer, path):
     connections = []
     for i in range(layer):
-        # connections.append([[i, path[i]], [i + 1, path[i + 1]]])
         for j in range(path[i]+1):
             if j == path[i]:
                 connections.append([[-1, 0], [i, j]])
@@ -188,8 +189,8 @@ if __name__ == "__main__":
         # second connections
         betas_path = args.betas_path_stage1
         path = get_first_space(betas_path)
-        np.save(args.core_path, path[-1])
-        connections = second_connect(16, 4, path[-1])
+        np.save(args.model_core_path, path[-1])
+        connections = second_connect(args.layers, path[-1])
         if test_connections(connections):
             np.save(args.save_path, connections)
 
@@ -202,4 +203,10 @@ if __name__ == "__main__":
         connections = third_connect(used_betas)
         if test_connections(connections):
             np.save(args.save_path, connections)
+            
+    elif args.stage == 'retrain':
+        alphas_path = args.alphas_path
+        cell_arch = get_retrain_space(alphas_path)[-1]
+        np.save(args.save_path, cell_arch)
+        
 

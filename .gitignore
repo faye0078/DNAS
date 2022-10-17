@@ -2,3 +2,5 @@
 /.idea
 /apex
 **/__pycache__
+**/512
+*.tar

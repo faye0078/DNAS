@@ -71,7 +71,7 @@ class SearchNet3(nn.Module):
                     num_last_features += self.base_multiplier * multi_dict[j]
 
 
-        self.last_conv = nn.Sequential(nn.Conv2d(320, 256, kernel_size=3, stride=1, padding=1, bias=False),
+        self.last_conv = nn.Sequential(nn.Conv2d(num_last_features, 256, kernel_size=3, stride=1, padding=1, bias=False),
                                        nn.BatchNorm2d(256),
                                        nn.Dropout(0.5),
                                        nn.Conv2d(256, 256, kernel_size=3, stride=1, padding=1, bias=False),

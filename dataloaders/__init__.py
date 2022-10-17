@@ -1,4 +1,4 @@
-from dataloaders.datasets import GID, cityscapes, uadataset, uadataset_dfc
+from dataloaders.datasets import GID
 from torch.utils.data import DataLoader, random_split
 import sys
 sys.path.append("../")
@@ -75,8 +75,11 @@ def make_data_loader(args, **kwargs):
         n_examples = len(train_set)
         n_train = int(n_examples/2)
         train_set1, train_set2 = random_split(train_set, [n_train, n_examples - n_train])
-
-        print(" Created train setB = {} examples, train setB = {}, val set = {} examples".format(len(train_set1), len(train_set2), len(val_set)))
+        
+        if args.nas == 'nas':
+            print(" Created train setB = {} examples, train setB = {}, val set = {} examples".format(len(train_set1), len(train_set2), len(val_set)))
+        elif args.nas == 'train':
+            print(" Created train set = {} examples, val set = {} examples, test set = {} examples".format(len(train_set), len(val_set), len(test_set)))
         train_loader = DataLoader(train_set, batch_size=args.batch_size, shuffle=True, **kwargs)
         train_loader1 = DataLoader(train_set1, batch_size=args.batch_size, shuffle=True, **kwargs)
         train_loader2 = DataLoader(train_set2, batch_size=args.batch_size, shuffle=True, **kwargs)

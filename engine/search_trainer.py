@@ -19,21 +19,25 @@ from utils.evaluator import Evaluator
 class Trainer(object):
     def __init__(self, args):
         self.args = args
-
+        
+        # data
+        kwargs = {'num_workers': args.num_workers, 'pin_memory': True, 'drop_last':True}
+        self.train_loaderA, self.train_loaderB, self.val_loader, self.nclass = make_data_loader(args, **kwargs)
+        
         # model
         torch.cuda.empty_cache()
         if self.args.model_name == 'DNAS':
             if self.args.search_stage == "first":
-                layers = np.ones([16, 4])
+                layers = np.ones([args.layers, 4])
                 connections = np.load(self.args.model_encode_path)
                 model = SearchNet1(layers, 4, connections, ReLUConvBN, self.args.dataset, self.nclass)
             elif self.args.search_stage == "second":
-                layers = np.ones([16, 4])
+                layers = np.ones([args.layers, 4])
                 connections = np.load(self.args.model_encode_path)
-                core_path = np.load('/media/dell/DATA/wy/Seg_NAS/model/model_encode/core_path.npy').tolist()
+                core_path = np.load(self.args.model_core_path).tolist()
                 model = SearchNet2(layers, 4, connections, ReLUConvBN, self.args.dataset, self.nclass, core_path=core_path)
             elif self.args.search_stage == "third":
-                layers = np.ones([16, 4])
+                layers = np.ones([args.layers, 4])
                 connections = np.load(self.args.model_encode_path)
                 print(connections)
                 model = SearchNet3(layers, 4, connections, MixedCell, self.args.dataset, self.nclass)
@@ -41,16 +45,12 @@ class Trainer(object):
         if args.cuda:
             self.model = self.model.cuda()
 
-        # data
-        kwargs = {'num_workers': args.workers, 'pin_memory': True, 'drop_last':True}
-        self.train_loaderA, self.train_loaderB, self.val_loader, self.nclass = make_data_loader(args, **kwargs)
-
         # train
         self.saver = Saver(args)
-        self.saver.save_experiment_config()
         self.criterion = SegmentationLosses(weight=None, cuda=args.cuda).build_loss(mode=args.loss_type)
+        iters_per_epoch = len(self.train_loaderA)
         self.scheduler = LR_Scheduler(args.lr_scheduler, args.lr,
-                                      args.epochs, 1000, min_lr=args.min_lr)
+                                      args.epochs, iters_per_epoch, min_lr=args.min_lr)
         self.optimizer = torch.optim.SGD(
             model.weight_parameters(),
             args.lr,

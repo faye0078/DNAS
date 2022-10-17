@@ -1,6 +1,7 @@
 import os
 import shutil
 import torch
+import cv2
 from collections import OrderedDict
 import glob
 import torch.distributed as dist
@@ -51,9 +52,8 @@ class Saver(object):
             log_file = open(logfile, 'w')
             p = OrderedDict()
             p['datset'] = self.args.dataset
-            p['batchsize'] = self.args.batch_size
-            p['out_stride'] = self.args.out_stride
             p['lr'] = self.args.lr
+            p['batchsize'] = self.args.batch_size
             p['lr_scheduler'] = self.args.lr_scheduler
             p['loss_type'] = self.args.loss_type
             p['epoch'] = self.args.epochs
@@ -64,8 +64,9 @@ class Saver(object):
                 log_file.write(key + ':' + str(val) + '\n')
             log_file.close()
 
+
     def save_train_info(self, loss, epoch, acc, miou, fwiou, iou, is_best):
-        train_info = 'loss:{}, epoch:{}, acc:{}, miou:{}, fwiou:{}, iou:{}'.format(str(loss), str(epoch+1), str(acc), str(miou), str(fwiou), str(iou))
+        train_info = 'loss:{}, epoch:{}, acc:{}, miou:{}, fwiou:{}, iou:{}'.format(str(loss), str(epoch + 1), str(acc), str(miou), str(fwiou), str(iou))
         if is_best:
             train_info = train_info + 'new best'
 
@@ -74,3 +75,21 @@ class Saver(object):
 
         file.write(train_info + '\n')
         file.close()
+
+    def save_test_info(self, loss, epoch, acc, miou, fwiou, iou):
+        train_info = 'loss: {}, epoch:{}, acc:{}, miou:{}, fwiou:{}, iou:{}'.format(str(loss), str(epoch + 1), str(acc), str(miou), str(fwiou),
+                                                                          str(iou))
+        info_file = os.path.join(self.experiment_dir, 'test_info.txt')
+        file = open(info_file, 'a')
+        file.write(train_info + '\n')
+        file.close()
+
+    def save_img(self, img, name):
+        dir = os.path.join(self.experiment_dir, name.split('/')[-2])
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        file_name = os.path.join(dir, name.split('/')[-1])
+        cv2.imwrite(file_name, img)
+
+    def get_fie_path(self):
+        return self.experiment_dir

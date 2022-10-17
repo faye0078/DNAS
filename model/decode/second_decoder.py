@@ -45,10 +45,8 @@ class Decoder(object):
         self.used_betas = used_betas
 
 def get_second_space(betas_path, core_path):
-    # betas_path = '/media/dell/DATA/wy/Seg_NAS/run/GID/12layers_second_batch24/experiment_1/betas/'
     betas_list = OrderedDict()
     used_betas_list = OrderedDict()
-    # core_path = [0, 0, 1, 1, 1, 0, 1, 0, 1, 2, 2, 2]
     core_path_num = np.zeros(len(core_path))
     for i in range(len(core_path)):
         if i == 0:
@@ -68,11 +66,6 @@ def get_second_space(betas_path, core_path):
         order_path_list.append(used_betas_list[idx])
 
     return order_path_list
-    # print(path_list)
-    # print(used_betas_list)
-    # b = np.array(path_list['betas_52.npy'])
 
-    # np.save(path + 'path.npy', b)
-    # print(b)
 
 

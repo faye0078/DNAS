@@ -2,11 +2,10 @@ import os
 import torch
 import numpy as np
 import random
+import sys
+sys.path.append("../")
 from configs.search_args import obtain_search_args
 from engine.search_trainer import Trainer
-
-# set GPU
-# os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 
 def setup_seed(seed):
     torch.manual_seed(seed)
@@ -17,6 +16,7 @@ def setup_seed(seed):
 
 def main():
     args = obtain_search_args()
+    print(args)
     args.cuda = torch.cuda.is_available()
     setup_seed(args.seed)
     trainer = Trainer(args)
