@@ -27,14 +27,14 @@ One GPU (video memory greater than 12GB)
 
 We use the GID-5 dataset in this rep. The original image of size 6800 × 7200 and the corresponding label are cut into blocks of size 512 × 512. These blocks are randomly divided into a training set, a validation set, and a test set in a ratio of 6:2:2. 
 
-The list file in [list_dir](./data/lists/GID/). You can Download these blocks from [OneDrive]() or [BaiduNetDisk](https://pan.baidu.com/s/1jLTOf9PktWDvJZXBy2hFSg)(code: 1111), and move it to the [data](./data/) dir 
+The list file in [list_dir](./data/lists/GID/). You can Download these blocks from [OneDrive](https://1drv.ms/u/s!AkdG3kpBQQcHg8BVUajKSwLF3WeNNg?e=gy3xI0) or [BaiduNetDisk](https://pan.baidu.com/s/1fLXmJZiJ7STPX2jh4S9nRg)(code: 1111), and move it to the [data](./data/) dir 
 
 ## Model Zoo
 
 |   Methods   |  mIoU  | GFLOPs | Params |  Memory  |                            Model                             |
 | :---------: | :----: | :----: | :----: | :------: | :----------------------------------------------------------: |
-| DNAS (L=12) | 0.8917 | 16.89  | 6.15 M | 753.0 M  | [BaiduNetDisk](https://drive.google.com/file/d/1Fa4hLS2GKL90HR0tVhmcZkFwemK6DlgT/view?usp=sharing) |
-| DNAS (L=14) | 0.9140 | 54.06  | 7.14 M | 1195.4 M | [BaiduNetDisk](https://drive.google.com/open?id=1o31jNkoSMugK0rEsi6grE9WEioWJgsZN) |
+| DNAS (L=12) | 0.8917 | 16.89  | 6.15 M | 753.0 M  | [OneDrive](https://1drv.ms/u/s!AkdG3kpBQQcHg8BWclILK1DFdiR9Rw?e=TlocZ5) or [BaiduNetDisk](https://pan.baidu.com/s/17izJilQRBydyapN2TobflA)(code: 1111) |
+| DNAS (L=14) | 0.9140 | 54.06  | 7.14 M | 1195.4 M | [OneDrive](https://1drv.ms/u/s!AkdG3kpBQQcHg8BX4s0uysjCmoZDIQ?e=EJDzbt) or[BaiduNetDisk](https://pan.baidu.com/s/1iYC5AW0L67HCjgoNLSsiVA)(code: 1111) |
 
 ## Simple Use the Searched and Trained Model
 
@@ -46,7 +46,7 @@ Take DNAS (L=14) model as an example, download it and move to the [model_encode]
 cd tools && python test_retrain_model.py
 ```
 
-* Use the trained model predict
+* Use the trained model to predict
 
 ```bash
 sh predict.sh
@@ -63,7 +63,7 @@ Take DNAS (L=14) model and GID-5 dataset as an example, download model encode fi
 * Make a personal dataset in dataloaders dir
 
 ```python
-class GIDDataset(Dataset):
+class GIDDataset(Dataset)
 ```
 
 * Run the Retrain
@@ -72,7 +72,7 @@ class GIDDataset(Dataset):
 sh retrain.sh
 ```
 
-### Search Model on Target Dataset
+## Search Model on Target Dataset
 
 * Search process(Need change some config path in .sh file between command line)
 
@@ -99,7 +99,7 @@ Consider cite the DNAS in your publications if it helps your research.
 
 ```
 @Article{rs14163864,
-AUTHOR = {Wang, Yu and Li, Yansheng and Chen, Wei and Li, Yunzhou and Dang, Bo},
+AUTHOR = {Wang Yu and Li, Yansheng and Chen, Wei and Li, Yunzhou and Dang, Bo},
 TITLE = {DNAS: Decoupling Neural Architecture Search for High-Resolution Remote Sensing Image Semantic Segmentation},
 JOURNAL = {Remote Sensing},
 URL = {https://www.mdpi.com/2072-4292/14/16/3864},
