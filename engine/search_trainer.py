@@ -2,15 +2,13 @@ import os
 import numpy as np
 import torch
 from tqdm import tqdm
-# model
+
 from model.SearchNetStage1 import SearchNet1
 from model.SearchNetStage2 import SearchNet2
 from model.SearchNetStage3 import SearchNet3
 from model.cell import ReLUConvBN, MixedCell
 from utils.copy_state_dict import copy_state_dict
-# data
 from dataloaders import make_data_loader
-# train
 from utils.lr_scheduler import LR_Scheduler
 from utils.loss import SegmentationLosses
 from utils.saver import Saver

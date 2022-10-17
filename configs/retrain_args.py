@@ -7,7 +7,7 @@ def obtain_retrain_args():
     # model
     parser.add_argument('--resume', type=str, default=None, help='put the path to resuming file if needed')
     parser.add_argument('--checkname', type=str, default='test', help='set the checkpoint name')
-    parser.add_argument('--model_name', type=str, default='flexinet', choices=['DNAS', 'hrnet', 'deeplabv3plus', 'pspnet', 'unet', 'refinenet', 'fast-nas', 'SrNet', 'one_path','MACUNet', 'MAResUNet', 'MSFCN'], help='the model name')
+    parser.add_argument('--model_name', type=str, default='DNAS', choices=['DNAS', 'hrnet', 'deeplabv3plus', 'pspnet', 'unet', 'refinenet', 'fast-nas', 'SrNet', 'one_path','MACUNet', 'MAResUNet', 'MSFCN'], help='the model name')
     parser.add_argument('--layers', type=int, default=12, help='supernet layers number')
     parser.add_argument('--model_encode_path', type=str, default=None)
     parser.add_argument('--cell_arch', type=str, default=None)

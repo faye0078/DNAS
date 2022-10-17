@@ -1,6 +1,5 @@
 import os
 import numpy as np
-import torch.nn as nn
 from tqdm import tqdm
 import cv2
 import torch

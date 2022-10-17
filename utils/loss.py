@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
 class SegmentationLosses(object):
     def __init__(self, weight=None, size_average=True, batch_average=True, ignore_index=255, cuda=False):
         self.ignore_index = ignore_index
@@ -38,27 +37,19 @@ class SegmentationLosses(object):
         n, c, h, w = logit.size()
         temp = logit[:, 0, :, :]
         logits = temp[target != self.ignore_index].unsqueeze(1)
-        # print(logits.shape)
         for i in range(1, c):
             temp = logit[:, i, :, :]
             logits = torch.cat([logits, temp[target != self.ignore_index].unsqueeze(1)], dim=1)
 
         targets = target[target != self.ignore_index].unsqueeze(1).long()
-        # print(indexes.shape)
         logits = nn.functional.softmax(logits, dim=1)
-        # print(logits.shape)
-        # print(targets.shape)
         Fj = torch.gather(logits, 1, targets)
-        # print(Fj.shape)
         if self.weight is not None:
             if self.cuda:
                 self.weight = self.weight.cuda()
             loss = torch.mean(((1 - (Fj + 1e-8) ** q) / q) * self.weight[targets])
         else:
             loss = torch.mean(((1 - (Fj + 1e-8) ** q) / q))
-
-        # if self.batch_average:
-        #     loss /= n
 
         return loss
 

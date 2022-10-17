@@ -1,9 +1,7 @@
 import numpy as np
 import torch
 from torch import nn
-import numpy
 from model.cell import MixedRetrainCell
-import torch.nn.functional as F
 
 class RetrainNet(nn.Module):
 

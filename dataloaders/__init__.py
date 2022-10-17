@@ -5,11 +5,9 @@ sys.path.append("../")
 from configs.Path import get_data_path
 
 from dataloaders.datasets.GID import (
-    CentralCrop,
     Normalise,
     RandomCrop,
     RandomMirror,
-    ResizeScale,
     ToTensor,
 )
 from torchvision import transforms

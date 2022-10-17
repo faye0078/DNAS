@@ -1,6 +1,5 @@
 import torch
 from torch import nn
-import numpy
 import torch.nn.functional as F
 from model.ops import OPS, OPS_mini
 from model.ops import conv3x3
@@ -19,8 +18,6 @@ class ReLUConvBN(nn.Module):
 
         self.scale = C_in/C_out
         self._initialize_weights()
-
-
 
     def forward(self, x):
         if self.scale != 0:
@@ -56,8 +53,6 @@ class ConvBNReLU(nn.Module):
 
         self.scale = C_in/C_out
         self._initialize_weights()
-
-
 
     def forward(self, x):
         if self.scale != 0:
@@ -129,8 +124,6 @@ class MixedCell(nn.Module):
         self.ops_num = len(self._ops)
         self.scale = C_in/C_out
         self._initialize_weights()
-
-
 
     def forward(self, x, cell_alphas):
         if self.scale != 0:

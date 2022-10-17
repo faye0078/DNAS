@@ -1,9 +1,6 @@
 import numpy as np
 import torch
 from torch import nn
-import numpy
-from model.cell import ReLUConvBN
-from collections import OrderedDict
 import torch.nn.functional as F
 
 class SearchNet2(nn.Module):

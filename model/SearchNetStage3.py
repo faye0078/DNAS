@@ -1,8 +1,6 @@
 import numpy as np
 import torch
 from torch import nn
-import numpy
-from model.cell import ReLUConvBN
 import torch.nn.functional as F
 
 class SearchNet3(nn.Module):

@@ -1,6 +1,5 @@
 import numpy as np
 import torch
-from torch.nn import functional as F
 import os
 from collections import OrderedDict
 class Decoder(object):
@@ -27,10 +26,8 @@ def get_retrain_space(alpha_path):
 
     order_cell_list = []
     for i in range(len(cell_list)):
-        # idx = 'alphas_{}.npy'.format(str(i))
         idx = 'alphas_{}.npy'.format(str(i))
         order_cell_list.append(cell_list[idx])
-    # print(path_list)
     print(order_cell_list)
     return order_cell_list
 

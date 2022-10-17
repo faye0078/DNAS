@@ -1,29 +1,6 @@
-"""Different custom layers"""
-
 import torch
 import torch.nn as nn
 from kornia.filters import *
-
-def conv3x3(in_planes, out_planes, stride=1, bias=False, dilation=1):
-    "3x3 convolution with padding"
-    return nn.Conv2d(
-        in_planes,
-        out_planes,
-        kernel_size=3,
-        stride=stride,
-        padding=dilation,
-        dilation=dilation,
-        bias=bias,
-    )
-
-
-def conv1x1(in_planes, out_planes, stride=1, bias=False):
-    "1x1 convolution"
-    return nn.Conv2d(
-        in_planes, out_planes, kernel_size=1, stride=stride, padding=0, bias=bias
-    )
-
-
 OPS = {
     "conv1x1": lambda C_in, C_out, stride, affine, repeats=1: nn.Sequential(
         conv1x1(C_in, C_out, stride=stride),
@@ -63,21 +40,6 @@ OPS = {
     "global_average_pool": lambda C_in, C_out, stride, affine, repeats=1: GAPConv1x1(
         C_in, C_out
     ),
-    # "sobel_operator": lambda C_in, C_out, stride, affine, repeats=1: Sobel(
-    #     C_in, C_out
-    # ),
-    # "laplacian_operator": lambda C_in, C_out, stride, affine, repeats=1: Laplacian(
-    #     C_in, C_out
-    # )
-    # 'edge_operator':  lambda C_in, C_out, stride, affine, repeats=1: Edge(
-    #     C_in, C_out
-    # ),
-    # "gaussian_operator": lambda C_in, C_out, stride, affine, repeats=1: Gaussian(
-    #     C_in, C_out
-    # ),
-    # "median_operator": lambda C_in, C_out, stride, affine, repeats=1: Median(
-    #         C_in, C_out
-    # )
 }
 
 OPS_mini = {
@@ -91,6 +53,25 @@ OPS_mini = {
         C_in, C_out, 7, stride, 3, affine=affine, repeats=repeats
     )
 }
+
+def conv3x3(in_planes, out_planes, stride=1, bias=False, dilation=1):
+    "3x3 convolution with padding"
+    return nn.Conv2d(
+        in_planes,
+        out_planes,
+        kernel_size=3,
+        stride=stride,
+        padding=dilation,
+        dilation=dilation,
+        bias=bias,
+    )
+
+
+def conv1x1(in_planes, out_planes, stride=1, bias=False):
+    "1x1 convolution"
+    return nn.Conv2d(
+        in_planes, out_planes, kernel_size=1, stride=stride, padding=0, bias=bias
+    )
 
 
 def conv_bn(C_in, C_out, kernel_size, stride, padding, affine=True):
@@ -273,80 +254,6 @@ class Edge(nn.Module):
 
         self.filter = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=3, stride=1, padding=1, bias=False)
         G = torch.tensor([[1.0, 2.0, -1.0], [2.0, 0.0, -2.0], [1.0, -2.0, -1.0]])
-        G = G.unsqueeze(0).unsqueeze(0)
-        self.filter.weight = nn.Parameter(G)
-
-    def forward(self, img):
-        b, c, w, h = img.shape
-        x = img.mean(1, True)
-        x = self.filter(x)
-        x.repeat(1, self.out_channels, 1, 1)
-        return x
-
-class Sobel(nn.Module):
-    def __init__(self, C_in, C_out):
-        super(Sobel, self).__init__()
-        self.out_channels = C_out
-        self.conv1x1 = conv_bn_relu(C_in, C_out, 1, 1, 0) # TODO:是否能够这样做？
-
-        self.filter = sobel
-        # Gx = torch.tensor([[1.0, 0.0, -1.0], [2.0, 0.0, -2.0], [1.0, 0.0, -1.0]])
-        # Gy = torch.tensor([[1.0, 2.0, 1.0], [0.0, 0.0, 0.0], [-1.0, -2.0, -1.0]])
-        # G = torch.cat([Gx.unsqueeze(0), Gy.unsqueeze(0)], 0)
-        # G = G.unsqueeze(1)
-        # self.filter.weight = nn.Parameter(G, requires_grad=False)
-
-    def forward(self, img):
-        x = self.filter(img, (3, 3))
-        x = self.conv1x1(x)
-        return x
-
-class Laplacian(nn.Module):
-    def __init__(self, C_in, C_out):
-        super(Laplacian, self).__init__()
-        self.out_channels = C_out
-        self.conv1x1 = conv_bn_relu(C_in, C_out, 1, 1, 0) # TODO:是否能够这样做？
-
-        self.filter = laplacian
-
-    def forward(self, img):
-        x = self.filter(img, 3, normalized=False)
-        x = self.conv1x1(x)
-        return x
-
-class Gaussian(nn.Module):
-    def __init__(self, C_in, C_out):
-        super(Gaussian, self).__init__()
-        self.out_channels = C_out
-        self.conv1x1 = conv_bn_relu(C_in, C_out, 1, 1, 0) # TODO:是否能够这样做？
-
-        self.filter = gaussian_blur2d
-
-    def forward(self, img):
-        img = self.conv1x1(img)
-        denoise_img = self.filter(img, (3, 3), (1.5, 1.5))
-        return denoise_img
-
-class Median(nn.Module):
-    def __init__(self, C_in, C_out):
-        super(Median, self).__init__()
-        self.out_channels = C_out
-        self.conv1x1 = conv_bn_relu(C_in, C_out, 1, 1, 0) # TODO:是否能够这样做？
-
-        self.filter = median_blur
-
-    def forward(self, img):
-        img = self.conv1x1(img)
-        denoise_img = self.filter(img, (3, 3))
-        return denoise_img
-
-class Denoising(nn.Module):
-    def __init__(self, C_in, C_out):
-        super(Denoising, self).__init__()
-        self.out_channels = C_out
-
-        self.filter = nn.Conv2d(in_channels=1, out_channels=1, kernel_size=3, stride=1, padding=1, bias=False)
-        G = torch.tensor([[1/9, 1/9, 1/9], [1/9, 1/9, 1/9], [1/9, 1/9, 1/9]])
         G = G.unsqueeze(0).unsqueeze(0)
         self.filter.weight = nn.Parameter(G)
 
