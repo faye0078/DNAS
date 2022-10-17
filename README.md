@@ -13,7 +13,7 @@ Code for paper：
 
 ## Requirement
 
-One GPU (video memory greater than 12GB)
+Ubuntu(or other Linux distribution), one GPU (video memory greater than 12GB)
 
 * python>=3.8.13
 * numpy>=1.22.3
@@ -25,7 +25,7 @@ One GPU (video memory greater than 12GB)
 
 ## Dataset
 
-We use the GID-5 dataset in this rep. The original image of size 6800 × 7200 and the corresponding label are cut into blocks of size 512 × 512. These blocks are randomly divided into a training set, a validation set, and a test set in a ratio of 6:2:2. 
+We use the [GID-5](https://captain-whu.github.io/GID/) dataset in this rep. The original image of size 6800 × 7200 and the corresponding label are cut into blocks of size 512 × 512. These blocks are randomly divided into a training set, a validation set, and a test set in a ratio of 6 : 2 : 2. 
 
 The list file in [list_dir](./data/lists/GID/). You can Download these blocks from [OneDrive](https://1drv.ms/u/s!AkdG3kpBQQcHg8BVUajKSwLF3WeNNg?e=gy3xI0) or [BaiduNetDisk](https://pan.baidu.com/s/1fLXmJZiJ7STPX2jh4S9nRg)(code: 1111), and move it to the [data](./data/) dir 
 
@@ -52,10 +52,10 @@ cd tools && python test_retrain_model.py
 sh predict.sh
 ```
 
-Predict result samples
+**Predict result samples:**
 
 ![framework](./paper/result.jpg)
-(a) and (b) are raw images and ground truth, respectively. (c) and (d) are the results of PSPNet and the results of Deeplabv3+, respectively. The results of HRNet and the results of MSFCN are shown in (e) and (f), respectively. (g) presents the results of Auto-deeplab, and (h) presents the results of Fast-NAS. The results of our proposed DNAS are displayed in (i).
+(a) image  (b) ground truth  (c) PSPNet  (d) Deeplabv3+  (e) HRNet  (f) MSFCN  (g) Auto-deeplab  (h) Fast-NAS  (i) DNAS.
 ## Train the Searched Model on Target Dataset
 
 Take DNAS (L=14) model and GID-5 dataset as an example, download model encode file and move to the [model_encode](./model/model_encode/) dir. 
@@ -77,20 +77,21 @@ sh retrain.sh
 * Search process(Need change some config path in .sh file between command line)
 
 ```bash
-sh ./experiments/stage1_encode.sh # Create first stage connections
-sh ./experiments/stage1_search.sh # Train the first surpernet
-sh ./experiments/stage2_encode.sh # Create second stage connections
-sh ./experiments/stage2_search.sh # Train the second surpernet
-sh ./experiments/stage3_encode.sh # Create third stage connections
-sh ./experiments/stage3_search.sh # Train the third surpernet
-sh ./experiments/stage3_search.sh # Train the third surpernet
-sh ./experiments/retrain_encode.sh # Decode the third result and create retrain cell structure
+cd tools
+sh stage1_encode.sh # Create first stage connections
+sh stage1_search.sh # Train the first surpernet
+sh stage2_encode.sh # Create second stage connections
+sh stage2_search.sh # Train the second surpernet
+sh stage3_encode.sh # Create third stage connections
+sh stage3_search.sh # Train the third surpernet
+sh stage3_search.sh # Train the third surpernet
+sh retrain_encode.sh # Decode the third result and create retrain cell structure
 ```
 
 * Finally, retrain the searched model:
 
 ```bash
-sh ./experiments/retrain.sh
+sh retrain.sh
 ```
 
 ## Citation
@@ -119,4 +120,4 @@ Consider cite this project in your publications if it helps your research.
 ```
 
 ## Contact
-If you have any questions about it, please let me know. (📧 email:wangfaye@whu.edu.cn)
+If you have any questions about it, please let me know. (📧 email: wangfaye@whu.edu.cn)
