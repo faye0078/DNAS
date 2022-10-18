@@ -84,7 +84,6 @@ sh stage2_encode.sh # Create second stage connections
 sh stage2_search.sh # Train the second surpernet
 sh stage3_encode.sh # Create third stage connections
 sh stage3_search.sh # Train the third surpernet
-sh stage3_search.sh # Train the third surpernet
 sh retrain_encode.sh # Decode the third result and create retrain cell structure
 ```
 
