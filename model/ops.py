@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-from kornia.filters import *
 OPS = {
     "conv1x1": lambda C_in, C_out, stride, affine, repeats=1: nn.Sequential(
         conv1x1(C_in, C_out, stride=stride),
