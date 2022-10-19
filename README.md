@@ -34,7 +34,7 @@ The list file in [list_dir](./data/lists/GID/). You can Download these blocks fr
 |   Methods   |  mIoU  | GFLOPs | Params |  Memory  |                            Model                             |
 | :---------: | :----: | :----: | :----: | :------: | :----------------------------------------------------------: |
 | DNAS (L=12) | 0.8917 | 16.89  | 6.15 M | 753.0 M  | [OneDrive](https://1drv.ms/u/s!AkdG3kpBQQcHg8BWclILK1DFdiR9Rw?e=TlocZ5) or [BaiduNetDisk](https://pan.baidu.com/s/17izJilQRBydyapN2TobflA)(code: 1111) |
-| DNAS (L=14) | 0.9140 | 54.06  | 7.14 M | 1195.4 M | [OneDrive](https://1drv.ms/u/s!AkdG3kpBQQcHg8BX4s0uysjCmoZDIQ?e=EJDzbt) or[BaiduNetDisk](https://pan.baidu.com/s/1iYC5AW0L67HCjgoNLSsiVA)(code: 1111) |
+| DNAS (L=14) | 0.9140 | 54.06  | 7.14 M | 1195.4 M | [OneDrive](https://1drv.ms/u/s!AkdG3kpBQQcHg8BX4s0uysjCmoZDIQ?e=EJDzbt) or [BaiduNetDisk](https://pan.baidu.com/s/1iYC5AW0L67HCjgoNLSsiVA)(code: 1111) |
 
 ## Simple Use the Searched and Trained Model
 
