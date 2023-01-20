@@ -28,7 +28,7 @@ def obtain_search_args():
     # train
     parser.add_argument('--nas', type=str, default='search', choices=['search', 'train'])
     parser.add_argument('--num_workers', type=int, default=8,metavar='N', help='dataloader threads')
-    parser.add_argument('--loss-type', type=str, default='ce', choices=['ce', 'focal'], help='loss func type (default: ce)')
+    parser.add_argument('--loss_type', type=str, default='ce', choices=['ce', 'focal'], help='loss func type (default: ce)')
     parser.add_argument('--epochs', type=int, default=60, metavar='N', help='number of epochs to train (default: auto)')
     parser.add_argument('--start_epoch', type=int, default=0, metavar='N', help='start epochs (default:0)')
     parser.add_argument('--alpha_epoch', type=int, default=20, metavar='N', help='epoch to start training alphas')

@@ -29,14 +29,14 @@ def obtain_test_args():
     # train
     parser.add_argument('--nas', type=str, default='train', choices=['search', 'train'])
     parser.add_argument('--num_worker', type=int, default=4,metavar='N', help='numer workers')
-    parser.add_argument('--loss-type', type=str, default='ce', choices=['ce', 'focal'], help='loss func type (default: ce)')
+    parser.add_argument('--loss_type', type=str, default='ce', choices=['ce', 'focal'], help='loss func type (default: ce)')
     parser.add_argument('--epochs', type=int, default=200, metavar='N', help='number of epochs to train (default: auto)')
     parser.add_argument('--start_epoch', type=int, default=0, metavar='N', help='start epochs (default:0)')
     parser.add_argument('--lr', type=float, default=0.025, metavar='LR', help='learning rate (default: auto)')
     parser.add_argument('--min_lr', type=float, default=0.001)
     parser.add_argument('--lr_scheduler', type=str, default='cos', choices=['poly', 'step', 'cos'], help='lr scheduler mode')
     parser.add_argument('--momentum', type=float, default=0.9, metavar='M', help='momentum (default: 0.9)')
-    parser.add_argument('--weight-decay', type=float, default=3e-4, metavar='M', help='w-decay (default: 5e-4)')
+    parser.add_argument('--weight_decay', type=float, default=3e-4, metavar='M', help='w-decay (default: 5e-4)')
     parser.add_argument('--seed', type=int, default=1, metavar='S', help='random seed (default: 1)')
 
     args = parser.parse_args()
